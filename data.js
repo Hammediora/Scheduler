@@ -49,6 +49,7 @@ function addEmployee(){
 }
 
 let x = document.getElementById("Time");
-console.log(x.value);
+//console.log(x.value);
 
 alert("YOOOOO");
+alert("Hello");
