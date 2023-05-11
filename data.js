@@ -34,7 +34,7 @@ class Employee {
     }
 
     kkj(){
-        
+
     }
 
 
@@ -50,3 +50,5 @@ function addEmployee(){
 
 let x = document.getElementById("Time");
 console.log(x.value);
+
+alert("YOOOOO");
