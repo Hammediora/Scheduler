@@ -31,21 +31,21 @@ const port = 3100;
 
   localServer.get('/', (req, res) => {
     res.send('Hello World!');
-  });
+});
 
 
-//Writing data to the database 
+//Writing data to the database
 function writeData(userId, name, email, imageUrl){
-    const db = getDatabase();
+  const db = getDatabase();
 
-    //Use pathnames to write where you want new data to start
-    //EX: root/state/county/city/school this would add a new school depending on location 
+  //Use pathnames to write where you want new data to start
+  //EX: root/state/county/city/school this would add a new school depending on location
     const reference = ref(db,'users/' + userId);
     set (reference, {
-        username: name,
-        email: email,
+    username: name,
+    email: email,
         profile_pic: imageUrl
-    });
+  });
 }
 
 //Calling the function here
@@ -54,15 +54,15 @@ writeData("benhern","Ben", "something@ggg.com", "imageLink");
 const db = getDatabase();
 const distanceRef = ref(db, 'users/');
 onValue(distanceRef, (snapshot) => {
-    const data = snapshot.val();
+  const data = snapshot.val();
 
-    //res sends to the web
-    //req gets the request from web 
-    localServer.listen(port, () => {
+  //res sends to the web
+  //req gets the request from web
+  localServer.listen(port, () => {
         console.log(`Example app listening on port ${port}`)
-        console.log(data);
+    console.log(data);
       })
-});
+  });
 
 
 
