@@ -70,48 +70,15 @@ document.getElementById("Submit").addEventListener("click", function (event) {
   submitData(employeeData);
 });
 
-// Add the employee to Firestore
+// Add the employee to firebase as well as adding a card of the person just added.
 function submitData(data) {
+  //Path of user info
   const reference = push(ref(db, "employees/userInfo"));
-
   const employeeID = reference.key;
-  data.ID = employeeID.substring(16);
 
-  set(reference, data);
+  data.ID = employeeID.substring(16); //Unique ID
 
-  let card = document.createElement("div");
-  let row = document.createElement("div");
-  let col1 = document.createElement("div");
-  let profilePic = document.createElement("img");
-  let col2 = document.createElement("div");
-  let cardBody = document.createElement("div");
-  let cardtitle = document.createElement("h5");
+  set(reference, data); //send Data
 
-  cardtitle.className = "card-title";
-  cardtitle.innerText = "NAME";
-  cardBody.appendChild(cardtitle);
-
-  col2.className = "col-md-8";
-
-  profilePic.className = "img-fluid rounded-start";
-  profilePic.src =
-    "https://www.free-images.com/lg/33df/patko_italian_coast.jpg";
-  profilePic.height = 100;
-  profilePic.width = 100;
-
-  col1.className = "col-md-4";
-  col1.appendChild(profilePic);
-
-  row.className = "row g-0";
-  row.appendChild(cardBody);
-  row.appendChild(col1);
-  row.appendChild(col2);
-
-  card.className = "card mb-3";
-  card.style = "max-width: 540px; height: 150px; cursor: pointer";
-  //card.onclick = show-info;
-
-  card.append(row);
-
-  document.getElementById("employee-card").append(card);
+  create_employee_card("Benjamin", "employee-card");
 }
