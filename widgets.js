@@ -3,7 +3,7 @@
  *
  */
 
-function create_employee_card(name, id) {
+function create_employee_card(data) {
   //Html elements needed to make the card
   let card = document.createElement("div");
   let row = document.createElement("div");
@@ -11,14 +11,19 @@ function create_employee_card(name, id) {
   let profilePic = document.createElement("img");
   let col2 = document.createElement("div");
   let cardBody = document.createElement("div");
-  let cardtitle = document.createElement("h5");
+  let cardtitle = document.createElement("h5")
+  let cardText = document.createElement("p");
 
   //Title in card
   cardtitle.className = "card-title";
-  cardtitle.innerText = name;
+  cardtitle.innerText = data.firstName + " " + data.lastName;
+  cardBody.appendChild(cardtitle);
+
+  cardText.className = "card-text";
+  cardText.innerText = "ID: " + data.ID; // Display the employee ID
+  cardBody.appendChild(cardText);
 
   //Body of card
-  cardBody.appendChild(cardtitle);
   cardBody.className = "card-body";
   col2.appendChild(cardBody);
   col2.className = "col-md-8";
@@ -26,8 +31,7 @@ function create_employee_card(name, id) {
   //Profile pic w/ styles
   col1.className = "col-md-4";
   profilePic.className = "img-fluid rounded-start mt-2";
-  profilePic.src =
-    "https://d2qp0siotla746.cloudfront.net/img/use-cases/profile-picture/template_0.jpg";
+  profilePic.src = "https://d2qp0siotla746.cloudfront.net/img/use-cases/profile-picture/template_0.jpg";
   profilePic.height = 100;
   profilePic.width = 100;
   col1.appendChild(profilePic);
@@ -42,5 +46,7 @@ function create_employee_card(name, id) {
   card.append(row);
 
   //Card widget added into the html to be seen.
-  document.getElementById(id).append(card);
+  document.getElementById("employee-card").append(card);
+
+  
 }
