@@ -4,7 +4,7 @@
  */
 
 //Widget to make the employee card
-function create_employee_card(name, id) {
+function create_employee_card(data, id) {
   //Html elements needed to make the card
   let card = document.createElement("div");
   let row = document.createElement("div");
