@@ -108,3 +108,5 @@ function  deleteEmployee(employeeID){
             console.error("Failed to remove employee: ", error);
         });
 }
+
+create_person_schedule();

@@ -1,0 +1,81 @@
+body {
+  background-image: url("https://img.freepik.com/free-photo/dark-geometric-background-with-copy-space_24972-1816.jpg?w=2000&t=st=1685200992~exp=1685201592~hmac=8dec9b7290180f22b00260d16d5f3664f115cfa2cc951c05484489238b7d67c2");
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.content-box {
+  box-shadow: 0 4px 8px 5px rgba(0, 164, 189, 0.2),
+    0 6px 20px 0 rgba(0, 164, 189, 0.19);
+  height: 300px;
+  width: 300px;
+}
+.day-highlight {
+  position: relative;
+  height: 100px;
+  background: rgba(0, 255, 0, 0.2);
+  clip-path: polygon(0% 0%, 0% 100%, 100% 100%);
+  transform: rotate(180deg);
+}
+
+.day-text-sideline {
+  height: 100px;
+  opacity: 0;
+  rotate: 223deg;
+  padding-left: 20%;
+  padding-top: 63%;
+  transform: translate(0px, -50px);
+}
+.day-text-sideline:hover,
+.night-text-sideline:hover {
+  opacity: 1;
+}
+
+.day-highlight:hover {
+  background: rgba(0, 255, 0, 0.5);
+}
+
+.night-text-sideline {
+  height: 130px;
+  transform: translate(-20px, 38px);
+  opacity: 0;
+  padding-left: 10%;
+  rotate: 43deg;
+}
+
+.night-highlight {
+  position: relative;
+  top: -100px;
+  height: 100px;
+  background: rgba(81, 196, 211, 0.2);
+  clip-path: polygon(0% 0%, 0% 100%, 100% 100%);
+}
+
+.night-highlight:hover {
+  background: rgba(81, 196, 211, 0.5);
+}
+
+.calendar-box {
+  box-shadow: 0 4px 8px 5px rgba(0, 164, 189, 0.2),
+    0 6px 20px 0 rgba(0, 164, 189, 0.19);
+  height: auto;
+  width: 350px;
+}
+
+.day {
+  border: 1px solid #00a4bd;
+  width: 150px;
+  height: 100px;
+  margin: 5px 5px 5px 5px;
+  padding: 0px !important;
+}
+
+.days {
+  font-weight: 800;
+  font-size: 15px;
+}
+
+.day:hover {
+  box-shadow: 0 4px 8px 0 rgba(11, 223, 225, 0.2),
+    0 6px 20px 0 rgba(11, 223, 225, 0.19);
+}

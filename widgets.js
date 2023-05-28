@@ -3,7 +3,8 @@
  *
  */
 
-function create_employee_card(data) {
+//Widget to make the employee card
+function create_employee_card(name, id) {
   //Html elements needed to make the card
   let card = document.createElement("div");
   let row = document.createElement("div");
@@ -46,7 +47,18 @@ function create_employee_card(data) {
   card.append(row);
 
   //Card widget added into the html to be seen.
-  document.getElementById("employee-card").append(card);
+  document.getElementById(id).append(card);
+
 
   
+}
+
+function create_person_schedule() {
+  let schedule = document.getElementById("person-schedule");
+
+}
+
+function create_person_schedule() {
+  let schedule = document.getElementById("person-schedule");
+
 }
