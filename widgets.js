@@ -12,7 +12,7 @@ function create_employee_card(data, id) {
   let profilePic = document.createElement("img");
   let col2 = document.createElement("div");
   let cardBody = document.createElement("div");
-  let cardtitle = document.createElement("h5")
+  let cardtitle = document.createElement("h5");
   let cardText = document.createElement("p");
 
   //Title in card
@@ -32,7 +32,8 @@ function create_employee_card(data, id) {
   //Profile pic w/ styles
   col1.className = "col-md-4";
   profilePic.className = "img-fluid rounded-start mt-2";
-  profilePic.src = "https://d2qp0siotla746.cloudfront.net/img/use-cases/profile-picture/template_0.jpg";
+  profilePic.src =
+    "https://d2qp0siotla746.cloudfront.net/img/use-cases/profile-picture/template_0.jpg";
   profilePic.height = 100;
   profilePic.width = 100;
   col1.appendChild(profilePic);
@@ -41,24 +42,16 @@ function create_employee_card(data, id) {
   row.className = "row g-0";
   row.appendChild(col1);
   row.appendChild(col2);
-  card.className = "card mb-3";
-  card.style = "max-width: 540px; height: 120px; cursor: pointer";
-  //card.onclick = show-info;
+  card.className = "card mb-3 mx-4";
+  card.style = "max-width: 390px; height: 120px; cursor: pointer";
+  card.onclick = create_person_schedule("yoooo");
   card.append(row);
 
   //Card widget added into the html to be seen.
   document.getElementById(id).append(card);
-
-
-  
 }
 
-function create_person_schedule() {
+function create_person_schedule(text) {
   let schedule = document.getElementById("person-schedule");
-
-}
-
-function create_person_schedule() {
-  let schedule = document.getElementById("person-schedule");
-
+  schedule.innerText = text;
 }

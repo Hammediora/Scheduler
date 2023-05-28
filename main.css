@@ -4,6 +4,15 @@ body {
   background-size: cover;
 }
 
+.employee-scroll {
+  height: 800px;
+  overflow: hidden;
+  border-right: 5px white;
+}
+.employee-scroll:hover {
+  overflow-y: scroll;
+}
+
 .content-box {
   box-shadow: 0 4px 8px 5px rgba(0, 164, 189, 0.2),
     0 6px 20px 0 rgba(0, 164, 189, 0.19);

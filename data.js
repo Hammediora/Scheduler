@@ -81,10 +81,8 @@ function submitData(data) {
 
   set(reference, data);
 
-  create_employee_card(data);
+  create_employee_card(data, "employee-card");
 }
-
-
 
 function displayEmployeeCards() {
   console.log("Displaying employee cards");
@@ -104,7 +102,6 @@ function displayEmployeeCards() {
       console.error("Failed to retrieve employee data: ", error);
     });
 }
-
 
 window.addEventListener("load", function () {
   displayEmployeeCards(); // the listener that displays the card every time you load the window
