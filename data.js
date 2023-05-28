@@ -93,7 +93,7 @@ function displayEmployeeCards() {
 
 }
 window.addEventListener('load', function() {
-    displayEmployeeCards();
+    displayEmployeeCards();                       // the listener that displays the card every time you load the window
 });
 
 

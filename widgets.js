@@ -20,7 +20,7 @@ function create_employee_card(data) {
   cardBody.appendChild(cardtitle);
 
   cardText.className = "card-text";
-  cardText.innerText = "ID: " + data.ID; // Display the employee ID
+  cardText.innerText = "ID: " + data.ID;
   cardBody.appendChild(cardText);
 
   //Body of card
