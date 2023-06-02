@@ -66,7 +66,7 @@ document.getElementById("Submit").addEventListener("click", function (event) {
     days: selectedDays,
   };
   submitData(employeeData);
-  //removeData(employeeData);
+
 
   window.addEventListener("load", function () {
     displayEmployeeCards();
@@ -84,38 +84,66 @@ function submitData(data) {
   create_employee_card(data, "employee-card");
 }
 
+
+// Function to display employee cards
 function displayEmployeeCards() {
   console.log("Displaying employee cards");
+
+  // Reference to the "employees/userInfo" path in the database
   const employeesRef = ref(db, "employees/userInfo");
-  get(employeesRef) //get employees data from data base
-    .then((snapshot) => {
-      if (snapshot.exists()) {
-        const data = snapshot.val();
-        Object.keys(data).forEach((employeeID) => {
-          // iterates over each employee data
-          const employee = data[employeeID];
-          create_employee_card(employee, "employee-card");
+  // Get employees data from the database
+    get(employeesRef)
+        .then((snapshot) => {
+          // Check if data exists
+          if (snapshot.exists()) {
+            const data = snapshot.val();
+            // Iterate over each employee data
+            Object.keys(data).forEach((employeeID) => {
+              const employee = data[employeeID];
+              // Create employee card for each employee
+              create_employee_card(employee, "employee-card");
+            });
+          }
+        })
+        .catch((error) => {
+          console.error("Failed to retrieve employee data: ", error);
         });
-      }
-    })
-    .catch((error) => {
-      console.error("Failed to retrieve employee data: ", error);
-    });
 }
 
-window.addEventListener("load", function () {
-  displayEmployeeCards(); // the listener that displays the card every time you load the window
-});
-
-function deleteEmployee(employeeID) {
-  const employeeRef = ref(db, "employees/userInfo/" + employeeID);
-  remove(employeeRef)
-    .then(() => {
-      console.log("Employee removed successfully!");
-    })
-    .catch((error) => {
-      console.error("Failed to remove employee: ", error);
+    // Listener that displays the employee cards when the window loads
+    window.addEventListener("load", function () {
+      displayEmployeeCards();
     });
+
+// Add click event listener to the delete button
+const deleteSelectedButton = document.getElementById('deleteButton');
+deleteSelectedButton.addEventListener('click', deleteSelectedCards);
+
+
+// function that handles deleting data
+function deleteFromDatabase(ID) {
+  // Remove employee data from Firebase
+  const employeeRef = ref(db, 'employees/userInfo/' + ID);
+  return remove(employeeRef)
 }
 
-create_person_schedule();
+// Function to delete the selected cards
+function deleteSelectedCards() {
+  const selectedCards = document.querySelectorAll(".card.selected");
+  selectedCards.forEach((card) => {
+    const ID = card.getAttribute("data-employee-id");
+    card.remove();
+    deleteFromDatabase(ID)
+        .then(() => {
+          console.log("Employee deleted from the database successfully!");
+        })
+        .catch((error) => {
+          console.error("Error deleting employee from the database: ", error);
+        });
+  });
+}
+
+
+
+
+//create_person_schedule();

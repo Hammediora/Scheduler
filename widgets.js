@@ -4,7 +4,7 @@
  */
 
 //Widget to make the employee card
-function create_employee_card(data, id) {
+function create_employee_card(data, Id) {
   //Html elements needed to make the card
   let card = document.createElement("div");
   let row = document.createElement("div");
@@ -47,8 +47,25 @@ function create_employee_card(data, id) {
   card.onclick = create_person_schedule("yoooo");
   card.append(row);
 
+  // Set an attribute for the card
+  card.setAttribute("data-employee-id", data.ID);
+
   //Card widget added into the html to be seen.
-  document.getElementById(id).append(card);
+  document.getElementById("employee-card").appendChild(card);
+
+  // Add click event listener to the card
+  card.addEventListener('click', toggleCardSelection);
+}
+
+  // Toggle selected class on the card when clicked
+  function toggleCardSelection(event) {
+    const card = event.currentTarget;
+    if(card.style.border == "2px solid red"){
+      card.style.border = ""; // Reset to the default style if the card is selected again
+    } else {
+      card.style.border = "2px solid red"; // Add a red border to the card when it is selected
+    }
+    card.classList.toggle('selected');
 }
 
 function create_person_schedule(text) {
