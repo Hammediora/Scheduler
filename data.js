@@ -115,34 +115,38 @@ function displayEmployeeCards() {
       displayEmployeeCards();
     });
 
+
 // Add click event listener to the delete button
 const deleteSelectedButton = document.getElementById('deleteButton');
 deleteSelectedButton.addEventListener('click', deleteSelectedCards);
-
-
-// function that handles deleting data
-function deleteFromDatabase(ID) {
-  // Remove employee data from Firebase
-  const employeeRef = ref(db, 'employees/userInfo/' + ID);
-  return remove(employeeRef)
-}
 
 // Function to delete the selected cards
 function deleteSelectedCards() {
   const selectedCards = document.querySelectorAll(".card.selected");
   selectedCards.forEach((card) => {
-    const ID = card.getAttribute("data-employee-id");
-    card.remove();
-    deleteFromDatabase(ID)
-        .then(() => {
-          console.log("Employee deleted from the database successfully!");
+    // Retrieve the data associated with the card
+    const employeeRef = ref(db, 'employees/userInfo/' );
+    get(employeeRef)
+        .then((snapshot) => {
+          if (snapshot.exists()) {
+            // Delete the data from the database
+            remove(employeeRef)
+                .then(() => {
+                  console.log("Employee data deleted from the database successfully!");
+                })
+                .catch((error) => {
+                  console.error("Error deleting employee data from the database: ", error);
+                });
+          }
         })
         .catch((error) => {
-          console.error("Error deleting employee from the database: ", error);
+          console.error("Error retrieving employee data from the database: ", error);
         });
+
+    // Remove the card from the UI
+    card.remove();
   });
 }
-
 
 
 

@@ -47,8 +47,6 @@ function create_employee_card(data, Id) {
   card.onclick = create_person_schedule("yoooo");
   card.append(row);
 
-  // Set an attribute for the card
-  card.setAttribute("data-employee-id", data.ID);
 
   //Card widget added into the html to be seen.
   document.getElementById("employee-card").appendChild(card);
