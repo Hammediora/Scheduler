@@ -9,6 +9,8 @@ import {
   child,
   update,
 } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-database.js";
+import { nanoid } from 'https://cdn.jsdelivr.net/npm/nanoid/nanoid.js';
+
 
 //Your web app's Firebase configuration
 const firebaseConfig = {
@@ -37,13 +39,28 @@ const app = initializeApp(firebaseConfig);
 // Initialize Realtime Database and get a reference to the service
 const db = getDatabase(app);
 
+//Create an employee counter
+let employeeCounter = 0;
+
+// Retrieve the employee counter from the database
+get(ref(db, "employees/counter"))
+    .then((snapshot) => {
+      if (snapshot.exists()) {
+        employeeCounter = snapshot.val();
+      }
+    })
+    .catch((error) => {
+      console.error("Failed to retrieve employee counter: ", error);
+    });
+
 // making the button a listener
 document.getElementById("Submit").addEventListener("click", function (event) {
   // Prevent the form from submitting normally
   event.preventDefault();
 
-  // Function to add an employee to the Firebase Firestore
-  // Get input values
+
+
+  // Function to add an employee to the Firebase Database
   const firstName = document.getElementById("inputFirst").value;
   const lastName = document.getElementById("inputLast").value;
   const position = document.getElementById("position").value;
@@ -57,38 +74,65 @@ document.getElementById("Submit").addEventListener("click", function (event) {
     }
   }
 
+
+// function to create the unique ID using the name initials and the counter.
+  function generateUniqueId(firstName, lastName) {
+    const initials = firstName.charAt(0) + lastName.charAt(0);
+    const employeeId = initials + ("000" + employeeCounter).slice(-3);
+    return employeeId;
+  }
+
+// Then, generate a new ID
+  const ID = generateUniqueId(firstName, lastName);
+  console.log('New ID is', ID);
+
   // Prepare the data to send to Firebase
   var employeeData = {
-    ID: "",
+    ID: ID,
     firstName: firstName,
     lastName: lastName,
     position: position,
     days: selectedDays,
   };
-  submitData(employeeData);
+  // Increment the employee counter
+  employeeCounter++;
 
+  // Update the employee counter in the database
+  set(ref(db, "employees/counter"), employeeCounter)
+      .then(() => {
+        console.log('Employee counter successfully updated');
+      })
+      .catch((error) => {
+        console.error('Failed to update employee counter: ', error);
+      });
+
+  // Add the employee to Firebase and create an employee card
+  submitData(employeeData);
 
   window.addEventListener("load", function () {
     displayEmployeeCards();
   });
 });
 
+
 // Add the employee to firebase as well as adding a card of the person just added.
 function submitData(data) {
-  const reference = push(ref(db, "employees/userInfo"));
-  const employeeID = reference.key;
-  data.ID = employeeID.substring(16);
-
-  set(reference, data);
-
-  create_employee_card(data, "employee-card");
+  const employeeId = data.ID; // Use the generated ID from the employeeData object
+  const reference = ref(db, `employees/userInfo/${employeeId}`);
+  set(reference, data)
+      .then(() => {
+        console.log('Data successfully written to database');
+        // Now create an employee card for this new employee
+        create_employee_card(data, "employee-card");
+      })
+      .catch((error) => {
+        console.error('Failed to write data to database: ', error);
+      });
 }
-
 
 // Function to display employee cards
 function displayEmployeeCards() {
   console.log("Displaying employee cards");
-
   // Reference to the "employees/userInfo" path in the database
   const employeesRef = ref(db, "employees/userInfo");
   // Get employees data from the database
@@ -116,38 +160,30 @@ function displayEmployeeCards() {
     });
 
 
-// Add click event listener to the delete button
-const deleteSelectedButton = document.getElementById('deleteButton');
-deleteSelectedButton.addEventListener('click', deleteSelectedCards);
-
 // Function to delete the selected cards
 function deleteSelectedCards() {
+  // Get all the cards with the 'selected' class.
   const selectedCards = document.querySelectorAll(".card.selected");
   selectedCards.forEach((card) => {
+    const cardId = card.getAttribute("data-employee-id");
     // Retrieve the data associated with the card
-    const employeeRef = ref(db, 'employees/userInfo/' );
-    get(employeeRef)
-        .then((snapshot) => {
-          if (snapshot.exists()) {
-            // Delete the data from the database
-            remove(employeeRef)
-                .then(() => {
-                  console.log("Employee data deleted from the database successfully!");
-                })
-                .catch((error) => {
-                  console.error("Error deleting employee data from the database: ", error);
-                });
-          }
+    const employeeRef = ref(db, 'employees/userInfo/' + cardId);
+    console.log('Deleting employee:', cardId);  // New log card ID
+    remove(employeeRef)
+        .then(() => {
+          console.log("Employee data deleted from the database successfully!");
+          // Remove the 'selected' class and the card from the UI only if the deletion was successful
+          card.classList.remove('selected');
+          card.remove();
         })
         .catch((error) => {
-          console.error("Error retrieving employee data from the database: ", error);
+          console.error("Error deleting employee data from the database: ", error);
         });
-
-    // Remove the card from the UI
-    card.remove();
   });
 }
 
-
+// Add click event listener to the delete button
+const deleteSelectedButton = document.getElementById('deleteButton');
+deleteSelectedButton.addEventListener('click', deleteSelectedCards);
 
 //create_person_schedule();

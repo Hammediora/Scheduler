@@ -4,7 +4,7 @@
  */
 
 //Widget to make the employee card
-function create_employee_card(data, Id) {
+function create_employee_card(data, ID) {
   //Html elements needed to make the card
   let card = document.createElement("div");
   let row = document.createElement("div");
@@ -47,6 +47,8 @@ function create_employee_card(data, Id) {
   card.onclick = create_person_schedule("yoooo");
   card.append(row);
 
+  // Set an attribute for the card
+  card.setAttribute("data-employee-id", data.ID);
 
   //Card widget added into the html to be seen.
   document.getElementById("employee-card").appendChild(card);
