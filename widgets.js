@@ -18,10 +18,12 @@ function create_employee_card(data, ID) {
   //Title in card
   cardtitle.className = "card-title";
   cardtitle.innerText = data.firstName + " " + data.lastName;
+  cardtitle.id = cardtitle.innerText;
   cardBody.appendChild(cardtitle);
 
   cardText.className = "card-text";
-  cardText.innerText = "ID: " + data.ID;
+  cardText.innerText = data.ID;
+  cardText.id = cardText.innerText;
   cardBody.appendChild(cardText);
 
   //Body of card
@@ -45,6 +47,7 @@ function create_employee_card(data, ID) {
   card.className = "card mb-3 mx-4";
   card.style = "max-width: 390px; height: 120px; cursor: pointer";
   card.onclick = create_person_schedule("yoooo");
+
   card.append(row);
 
   // Set an attribute for the card
@@ -54,18 +57,20 @@ function create_employee_card(data, ID) {
   document.getElementById("employee-card").appendChild(card);
 
   // Add click event listener to the card
-  card.addEventListener('click', toggleCardSelection);
+  card.addEventListener("click", toggleCardSelection);
 }
 
-  // Toggle selected class on the card when clicked
-  function toggleCardSelection(event) {
-    const card = event.currentTarget;
-    if(card.style.border == "2px solid red"){
-      card.style.border = ""; // Reset to the default style if the card is selected again
-    } else {
-      card.style.border = "2px solid red"; // Add a red border to the card when it is selected
-    }
-    card.classList.toggle('selected');
+// Toggle selected class on the card when clicked
+function toggleCardSelection(event) {
+  console.log(event.currentTarget);
+  const card = event.currentTarget;
+
+  if (card.style.border === "2px solid red") {
+    card.style.border = ""; // Reset to the default style if the card is selected again
+  } else {
+    card.style.border = "2px solid red"; // Add a red border to the card when it is selected
+  }
+  card.classList.toggle("selected");
 }
 
 function create_person_schedule(text) {
